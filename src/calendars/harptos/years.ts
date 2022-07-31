@@ -1,6 +1,6 @@
 // Year names gathered from here: http://ws-forgottenrealms.wikidot.com/roll-of-years
 
-export const yearSuffix = {
+export const yearNameMap: Record<string, string> = {
   '-700': 'Twelve Gods',
   '-699': 'Moon Blades Clashing',
   '-698': 'Plentiful Herds',

@@ -1,12 +1,24 @@
-# Fantasy Calendar
+# RPG Calendar
+
+**THIS IS CURRENTLY A WORK IN PROGRESS**
+
+I will remove this message, when this library is ready for "prime-time"
 
 ## Usage
 
 ```typescript
-import { HarptosCalendar } from '@steamedcotton/rpg-calendar';
+import { Calendar, calendars } from 'rpg-calendar';
 
-const cal = new HarptosCalendar();
+// Create a new Calendar using the Harptos Extra Days configuration.  This will add the "special" days as extra days
+// at the end of each month.  If you want the days to be separate months, then you can use
+// calendars.harptos.extraMonths.
+const cal = new Calendar(calendars.harptos.extraDays);
+
+// Use the calandar to parse an epoch
+console.log(cal.epochToDate('500-11:57:30'));
 ```
+
+## References
 
 I used the following for references and inspiration:
 
