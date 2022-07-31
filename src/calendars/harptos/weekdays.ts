@@ -1,4 +1,4 @@
-import { RPGCalendarWeekday } from '../../types';
+import { RPGCalendarWeekday } from '../../lib/types';
 
 export const weekdays: RPGCalendarWeekday[] = [
   { name: 'First day' },

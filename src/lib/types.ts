@@ -1,6 +1,6 @@
 import { MonthTypes } from './monthTypes';
 
-interface RPGCalendarConfig {
+export interface RPGCalendarConfig {
   name: string;
   leapYearInterval?: number;
   hasYear0?: boolean;
@@ -10,41 +10,41 @@ interface RPGCalendarConfig {
   yearNameMap?: Record<string, string>;
 }
 
-interface RPGCalendarExtraDay {
+export interface RPGCalendarExtraDay {
   name: string;
   onlyInLeapYear?: boolean;
 }
 
-interface RPGCalendarSeason {
+export interface RPGCalendarSeason {
   name: string;
   dayOfMonth: number;
   monthOfYear: number;
 }
 
-interface RPGCalendarMonth {
+export interface RPGCalendarMonth {
   name: string;
   daysInMonth: number;
   extraDays?: RPGCalendarExtraDay[];
   type?: MonthTypes;
 }
 
-interface RPGCalendarMoonPhase {
+export interface RPGCalendarMoonPhase {
   icon?: string;
   name?: string;
   value?: string;
 }
 
-interface RPGCalendarWeekday {
+export interface RPGCalendarWeekday {
   name: string;
 }
 
-interface RPGCalendarTime {
+export interface RPGCalendarTime {
   hour?: number;
   minute?: number;
   second?: number;
 }
 
-type RPGCalendarDate = {
+export interface RPGCalendarDate {
   dayName?: string;
   dayOfMonth?: number;
   dayOfWeek?: number;
@@ -59,4 +59,4 @@ type RPGCalendarDate = {
   time?: RPGCalendarTime;
   year?: number;
   yearName?: string;
-};
+}

@@ -1,5 +1,5 @@
 import { isLeapYearBuilder } from './leapYear';
-import { RPGCalendarMonth } from '../types';
+import { RPGCalendarMonth } from './types';
 import { getDaysInMonthBuilder } from './daysInMonth';
 
 const isLeapYear4Years = isLeapYearBuilder(4, true);

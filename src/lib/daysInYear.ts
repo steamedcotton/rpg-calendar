@@ -1,4 +1,4 @@
-import { RPGCalendarMonth } from '../types';
+import { RPGCalendarMonth } from './types';
 
 export const getDaysInYearBuilder = (months: RPGCalendarMonth[], isLeapYear: (year: number) => boolean) => {
   // We use the days in year a lot, so calculate the variables ahead of time
