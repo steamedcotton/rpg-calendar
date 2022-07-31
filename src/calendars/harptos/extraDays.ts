@@ -1,4 +1,4 @@
-import { RPGCalendarConfig } from '../../types';
+import { RPGCalendarConfig } from '../../lib/types';
 import { weekdays } from './weekdays';
 import { yearNameMap } from './years';
 

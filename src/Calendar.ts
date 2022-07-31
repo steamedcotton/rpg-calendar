@@ -1,5 +1,11 @@
-import { RPGCalendarConfig, RPGCalendarDate, RPGCalendarTime } from './types';
-import { isLeapYearBuilder, getDaysInYearBuilder, getDaysInMonthBuilder, getDaysInWeekBuilder, getYearNameBuilder } from './lib';
+import { RPGCalendarConfig, RPGCalendarDate, RPGCalendarTime } from './lib/types';
+import {
+  isLeapYearBuilder,
+  getDaysInYearBuilder,
+  getDaysInMonthBuilder,
+  getDaysInWeekBuilder,
+  getYearNameBuilder
+} from './lib';
 
 export class Calendar {
   // Utility functions
@@ -8,6 +14,8 @@ export class Calendar {
   private getDaysInMonth: (month: number, year: number) => number;
   private getDaysInWeek: () => number;
   private getYearName: (year: number) => string;
+  private getDayName: (dayOfWeek: number) => string;
+  private getMonthName: (month: number) => string;
 
   constructor(private config: RPGCalendarConfig) {
     this.isLeapYear = isLeapYearBuilder(config?.leapYearInterval || 0, config?.hasYear0);
@@ -15,6 +23,8 @@ export class Calendar {
     this.getDaysInMonth = getDaysInMonthBuilder(config.months, this.isLeapYear);
     this.getDaysInWeek = getDaysInWeekBuilder(config.weekdays);
     this.getYearName = getYearNameBuilder(config.yearNameMap);
+    this.getDayName = (dayOfWeek: number): string => this.config.weekdays?.[dayOfWeek - 1]?.name || 'Unknown';
+    this.getMonthName = (month: number): string => this.config.months?.[month]?.name || 'Unknown';
   }
 
   // epochToDate accepts both a simple day epoch (number of days) or a complex epoch (number of days with the time)
@@ -75,9 +85,9 @@ export class Calendar {
       dayOfMonth,
       dayOfYear,
       dayOfWeek,
-      dayName: this.config.weekdays?.[dayOfWeek - 1]?.name || 'Unknown',
+      dayName: this.getDayName(dayOfWeek),
       inLeapYear: this.isLeapYear(year),
-      monthName: this.config.months?.[monthOfYear]?.name || 'Unknown',
+      monthName: this.getMonthName(monthOfYear),
       yearName: this.getYearName(year),
       time
     };
@@ -102,16 +112,21 @@ export class Calendar {
     epochDay += day;
     dayOfYear += day;
 
+    // Calculate day of week
+    const daysInWeek = this.getDaysInWeek();
+    const dayMod = day % daysInWeek;
+    const dayOfWeek = dayMod === 0 ? day / daysInWeek : dayMod;
+
     return {
       year,
       epochDay,
       monthOfYear: month,
       dayOfMonth: day,
       dayOfYear,
-      // dayOfWeek,
-      // dayName: this.config.weekdays?.[dayOfWeek - 1]?.name || 'Unknown',
+      dayOfWeek,
+      dayName: this.getDayName(dayOfWeek),
       inLeapYear: this.isLeapYear(year),
-      monthName: this.config.months?.[month]?.name || 'Unknown',
+      monthName: this.getMonthName(month),
       yearName: this.getYearName(year),
       time: {
         hour,
