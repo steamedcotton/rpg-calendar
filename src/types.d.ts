@@ -1,18 +1,41 @@
-interface ExtraDays {
+import { MonthTypes } from './monthTypes';
+
+interface RPGCalendarConfig {
   name: string;
-  onlyInLeapYear: boolean;
+  leapYearInterval?: number;
+  hasYear0?: boolean;
+  weekdays: RPGCalendarWeekday[];
+  months: RPGCalendarMonth[];
+  seasons: RPGCalendarSeason[];
+  yearNameMap?: Record<string, string>;
+}
+
+interface RPGCalendarExtraDay {
+  name: string;
+  onlyInLeapYear?: boolean;
+}
+
+interface RPGCalendarSeason {
+  name: string;
+  dayOfMonth: number;
+  monthOfYear: number;
 }
 
 interface RPGCalendarMonth {
   name: string;
   daysInMonth: number;
-  extraDays?: ExtraDays[];
+  extraDays?: RPGCalendarExtraDay[];
+  type?: MonthTypes;
 }
 
 interface RPGCalendarMoonPhase {
   icon?: string;
   name?: string;
   value?: string;
+}
+
+interface RPGCalendarWeekday {
+  name: string;
 }
 
 interface RPGCalendarTime {
