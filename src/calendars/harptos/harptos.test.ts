@@ -74,5 +74,21 @@ describe('Harptos calendar', () => {
     expect(h.createDate(15000).yearName).toBe('Year of 15000');
   });
 
+  test('year 0 should be a leap year', () => {
+    const h = new Calendar(extraDays);
+    expect(h.createDate(0).inLeapYear).toBe(true);
+  })
+
+  test('converting date time string to date object', () => {
+    const h = new Calendar(extraDays);
+    const d = h.dateStringToRPGDate('1345-02-05 11:37:09');
+    expect(d.year).toBe(1345);
+    expect(d.dayOfMonth).toBe(5);
+    expect(d.monthOfYear).toBe(2);
+    expect(d.dayOfWeek).toBe(5);
+    expect(d.time.hour).toBe(11);
+    expect(d.time.minute).toBe(37);
+    expect(d.time.second).toBe(9);
+  });
   // TODO: Add many more tests for edge cases (leap year, after first month, etc)
 });

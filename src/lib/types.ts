@@ -8,6 +8,7 @@ export interface RPGCalendarConfig {
   months: RPGCalendarMonth[];
   seasons: RPGCalendarSeason[];
   yearNameMap?: Record<string, string>;
+  hoursInDay?: number;
 }
 
 export interface RPGCalendarExtraDay {
@@ -59,4 +60,13 @@ export interface RPGCalendarDate {
   time?: RPGCalendarTime;
   year?: number;
   yearName?: string;
+}
+
+export interface RPGCalendarMonthDisplay {
+  prevMonth: RPGCalendarMonth;
+  month: RPGCalendarMonth;
+  nextMonth: RPGCalendarMonth;
+  startDayOfWeek: number;
+  weekdays: RPGCalendarWeekday[];
+  days: RPGCalendarDate[];
 }
