@@ -4,6 +4,12 @@
 
 I will remove this message, when this library is ready for "prime-time"
 
+## About
+
+This is a silly little project related to a much bigger (and even more silly) project.  The point of this library is to work with fantasy calendars in a way that make it easy to create UIs.
+
+Example Calendar UI using this library: []()
+
 ## Usage
 
 ```typescript
@@ -17,6 +23,15 @@ const cal = new Calendar(calendars.harptos.extraDays);
 // Use the calandar to parse an epoch
 console.log(cal.epochToDate('500-11:57:30'));
 ```
+
+## Build in Calendars
+
+# Harptos
+
+It was a little difficult to find a source of truth of details around the calendar of Harptos.  As best as I can tell, these assumptions are true (and they are what I used to implement the configurations in `calendars.harptos`):
+
+* There is a year 0.  There are several references ([like this one](https://www.sageadvice.eu/forgotten-realms-is-there-a-year-0-dr-or-is-1-dr-immediately-followed-by-1-dr-if-there-is-a-year-0-what-happens-in-it/)) to Year 0 - "The Year of the Rising Flame".
+* Year 0 was a leap year.  I didn't find anything about this other than "every 4 years" and this makes it a little more consistent for the negative years (e.g. years -4, 0, 4 are all leap years).
 
 ## References
 

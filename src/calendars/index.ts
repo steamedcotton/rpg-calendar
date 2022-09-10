@@ -1,15 +1,15 @@
-import { extraDays } from './harptos/extraDays';
-import { extraMonths } from './harptos/extraMonths';
+import { monthsWithExtraDays } from './harptos/monthsWithExtraDays';
+import { monthsWithExtraMonths } from './harptos/monthsWithExtraMonths';
 
 export const calendars = {
   harptos: {
     // The special days are presented as additional months (intercalation months)
-    extraMonths,
+    extraMonths: monthsWithExtraMonths,
 
     // The special days are presented as extra days at the end of the month preceding it.
-    extraDays,
+    extraDays: monthsWithExtraDays,
 
     // This is the default calendar for harptos.
-    standard: extraDays
+    standard: monthsWithExtraDays
   }
 };
