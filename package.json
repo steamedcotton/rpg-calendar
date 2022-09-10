@@ -1,6 +1,6 @@
 {
   "name": "rpg-calendar",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Low level library for working with RPG/Fantasy dates",
   "scripts": {
     "build": "run-p build:*",

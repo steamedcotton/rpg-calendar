@@ -2,12 +2,14 @@ import { RPGCalendarConfig } from '../../lib/types';
 import { weekdays } from './weekdays';
 import { yearNameMap } from './years';
 
-export const extraDays: RPGCalendarConfig = {
+// This contains months with the extra days (like Midwinter) added in a extra days in the month.
+export const monthsWithExtraDays: RPGCalendarConfig = {
   name: 'Harptos - Extra Days',
   hasYear0: true,
   leapYearInterval: 4,
   yearNameMap,
   weekdays,
+  monthStartOnWeekStart: true,
   months: [
     {
       name: 'Hammer',
