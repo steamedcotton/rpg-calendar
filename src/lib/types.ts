@@ -61,6 +61,7 @@ export interface RPGCalendarDate {
   time?: RPGCalendarTime;
   year?: number;
   yearName?: string;
+  extraDay?: RPGCalendarExtraDay;
 }
 
 export interface RPGCalendarMonthQuery {
@@ -69,7 +70,11 @@ export interface RPGCalendarMonthQuery {
 }
 
 export interface RPGCalendarMonthDisplay extends RPGCalendarMonth {
+  year: number;
+  monthOfYear: number;
+  yearName?: string;
   weeks: RPGCalendarDate[][];
+  weekdays: RPGCalendarWeekday[];
   nextMonthQuery: RPGCalendarMonthQuery;
   prevMonthQuery: RPGCalendarMonthQuery;
 }

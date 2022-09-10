@@ -9,9 +9,9 @@ describe('Harptos calendar', () => {
     expect(d.year).toBe(0);
     expect(d.dayOfMonth).toBe(10);
     expect(d.monthOfYear).toBe(1);
-    expect(d.time.hour).toBe(0);
-    expect(d.time.minute).toBe(0);
-    expect(d.time.second).toBe(0);
+    expect(d?.time?.hour).toBe(0);
+    expect(d?.time?.minute).toBe(0);
+    expect(d?.time?.second).toBe(0);
   });
 
   test('harptos epoch to date time - extra months', () => {
@@ -20,9 +20,9 @@ describe('Harptos calendar', () => {
     expect(d.year).toBe(0);
     expect(d.dayOfMonth).toBe(10);
     expect(d.monthOfYear).toBe(1);
-    expect(d.time.hour).toBe(0);
-    expect(d.time.minute).toBe(0);
-    expect(d.time.second).toBe(0);
+    expect(d?.time?.hour).toBe(0);
+    expect(d?.time?.minute).toBe(0);
+    expect(d?.time?.second).toBe(0);
   });
 
   test('get simple date from epoch', () => {
@@ -60,9 +60,9 @@ describe('Harptos calendar', () => {
     const h = new Calendar(monthsWithExtraDays);
     const d = h.epochToDate('500-11:57:30');
     expect(d.year).toBe(1);
-    expect(d.time.hour).toBe(11);
-    expect(d.time.minute).toBe(57);
-    expect(d.time.second).toBe(30);
+    expect(d?.time?.hour).toBe(11);
+    expect(d?.time?.minute).toBe(57);
+    expect(d?.time?.second).toBe(30);
   });
 
   test('year names', () => {
@@ -86,15 +86,15 @@ describe('Harptos calendar', () => {
     expect(d.dayOfMonth).toBe(5);
     expect(d.monthOfYear).toBe(2);
     expect(d.dayOfWeek).toBe(5);
-    expect(d.time.hour).toBe(11);
-    expect(d.time.minute).toBe(37);
-    expect(d.time.second).toBe(9);
+    expect(d?.time?.hour).toBe(11);
+    expect(d?.time?.minute).toBe(37);
+    expect(d?.time?.second).toBe(9);
   });
   // TODO: Add many more tests for edge cases (leap year, after first month, etc)
 
   test('getting a calendar month to display (Extra Days)', () => {
     const h = new Calendar(monthsWithExtraDays);
-    const md = h.getDisplayMonth(100, 1);
+    const md = h.getDisplayMonth({ year: 100, month: 1 });
 
     expect(md.weeks.length).toBe(4);
     expect(md.weeks[0].length).toBe(10);
@@ -110,7 +110,7 @@ describe('Harptos calendar', () => {
 
   test('getting a calendar month to display (Extra Months)', () => {
     const h = new Calendar(monthsWithExtraMonths);
-    const md = h.getDisplayMonth(100, 1);
+    const md = h.getDisplayMonth({ year: 100, month: 1 });
 
     expect(md.weeks.length).toBe(3);
     expect(md.weeks[0].length).toBe(10);

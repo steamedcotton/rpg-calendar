@@ -9,6 +9,8 @@
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
+    "fix:example": "cd example && npm run fix && cd -",
+    "build-example": "cd example && npm run build && cd -",
     "test": "jest"
   },
   "repository": {

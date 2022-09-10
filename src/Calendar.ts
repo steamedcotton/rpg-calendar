@@ -4,7 +4,9 @@ import {
   RPGCalendarMonthDisplay,
   RPGCalendarTime,
   RPGCalendarMonth,
-  RPGCalendarMonthQuery
+  RPGCalendarMonthQuery,
+  RPGCalendarWeekday,
+  RPGCalendarExtraDay
 } from './lib/types';
 import {
   isLeapYearBuilder,
@@ -13,7 +15,8 @@ import {
   getDaysInWeekBuilder,
   getYearNameBuilder,
   getPrevMonthYearBuilder,
-  getNextMonthYearBuilder
+  getNextMonthYearBuilder,
+  getExtraDayBuilder
 } from './lib';
 import { getTimeString } from './lib/time';
 
@@ -27,20 +30,26 @@ export class Calendar {
   private getDayName: (dayOfWeek: number) => string;
   private getMonthName: (month: number) => string;
   private getConfigMonth: (month: number) => RPGCalendarMonth;
+  private getWeekDays: () => RPGCalendarWeekday[];
   private getNextMonthYear: (monthQuery: RPGCalendarMonthQuery) => RPGCalendarMonthQuery;
   private getPrevMonthYear: (monthQuery: RPGCalendarMonthQuery) => RPGCalendarMonthQuery;
+  private getExtraDay: (year: number, month: number, day: number) => RPGCalendarExtraDay | undefined;
 
   constructor(private config: RPGCalendarConfig) {
+    const { yearNameMap = {} } = config;
+
     this.isLeapYear = isLeapYearBuilder(config?.leapYearInterval || 0, config?.hasYear0);
     this.getDaysInYear = getDaysInYearBuilder(config.months, this.isLeapYear);
     this.getDaysInMonth = getDaysInMonthBuilder(config.months, this.isLeapYear);
     this.getDaysInWeek = getDaysInWeekBuilder(config.weekdays);
-    this.getYearName = getYearNameBuilder(config.yearNameMap);
+    this.getYearName = getYearNameBuilder(yearNameMap);
+    this.getWeekDays = (): RPGCalendarWeekday[] => this.config.weekdays;
     this.getDayName = (dayOfWeek: number): string => this.config.weekdays?.[dayOfWeek - 1]?.name || 'Unknown';
-    this.getMonthName = (month: number): string => this.config.months?.[month]?.name || 'Unknown';
-    this.getConfigMonth = (month: number): RPGCalendarMonth => this.config.months[month];
+    this.getMonthName = (month: number): string => this.config.months?.[month - 1]?.name || 'Unknown';
+    this.getConfigMonth = (month: number): RPGCalendarMonth => this.config.months[month - 1];
     this.getPrevMonthYear = getPrevMonthYearBuilder(config?.hasYear0, this.config.months);
     this.getNextMonthYear = getNextMonthYearBuilder(config?.hasYear0, this.config.months);
+    this.getExtraDay = getExtraDayBuilder(this.config.months, this.isLeapYear);
   }
 
   // dateStringToRPGDate accepts the date in a more readable format, parses it and returns an RPGCalendarDate object.
@@ -203,44 +212,40 @@ export class Calendar {
       inLeapYear: this.isLeapYear(year),
       monthName: this.getMonthName(month),
       yearName: this.getYearName(year),
-      time
+      time,
+      extraDay: this.getExtraDay(year, month, day)
     };
   }
 
   // getDisplayMonth returns a month object based on the month and year
-  getDisplayMonth(year: number, month: number): RPGCalendarMonthDisplay {
+  getDisplayMonth(mq: RPGCalendarMonthQuery): RPGCalendarMonthDisplay {
+    const { year, month } = mq;
     // Get the month as it's defined in the configuration
     const configMonth = this.getConfigMonth(month);
 
     // Get the first day of the month so that we can pull off all the information that pertains to the entire month.
     const firstDayOfMonth = this.createDate(year, month, 1);
-    const { monthName, monthOfYear, inLeapYear, epochDay: epochDayStart } = firstDayOfMonth;
+    const { yearName } = firstDayOfMonth;
     const daysInMonth = this.getDaysInMonth(month, year);
     const daysInWeek = this.getDaysInWeek();
     const weeks: RPGCalendarDate[][] = [];
 
     for (let d = 1; d <= daysInMonth; d++) {
-      const dayOfWeek = d % daysInWeek || daysInWeek;
       const w = Math.floor((d - 1) / daysInWeek);
       if (!weeks?.[w]) {
         weeks.push([]);
       }
 
-      weeks[w].push({
-        dayOfWeek,
-        inLeapYear,
-        monthName,
-        year,
-        dayName: this.getDayName(dayOfWeek),
-        monthOfYear,
-        dayOfMonth: d,
-        epochDay: epochDayStart + (d - 1)
-      });
+      weeks[w].push(this.createDate(year, month, d));
     }
 
     return {
       ...configMonth,
       weeks,
+      year,
+      yearName,
+      monthOfYear: month,
+      weekdays: this.getWeekDays(),
       nextMonthQuery: this.getNextMonthYear({ year, month }),
       prevMonthQuery: this.getPrevMonthYear({ year, month })
     };
