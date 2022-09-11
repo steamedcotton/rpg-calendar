@@ -8,7 +8,7 @@ I will remove this message, when this library is ready for "prime-time"
 
 This is a silly little project related to a much bigger (and even more silly) project.  The point of this library is to work with fantasy calendars in a way that make it easy to create UIs.
 
-Example Calendar UI using this library: []()
+Example Calendar UI using this library: [steamedcotton.github.io/rpg-calendar](https://steamedcotton.github.io/rpg-calendar/)
 
 ## Usage
 
