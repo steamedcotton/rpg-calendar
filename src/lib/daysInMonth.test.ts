@@ -8,10 +8,12 @@ describe('Days in month', () => {
   test('Simple days in month', () => {
     const months: RPGCalendarMonth[] = [
       {
+        monthInYear: 1,
         name: 'Test Month 1',
         daysInMonth: 9
       },
       {
+        monthInYear: 2,
         name: 'Test Month 2',
         daysInMonth: 11
       }
@@ -25,6 +27,7 @@ describe('Days in month', () => {
   test('Months with extra days', () => {
     const months: RPGCalendarMonth[] = [
       {
+        monthInYear: 1,
         name: 'Test Month 1',
         daysInMonth: 9,
         extraDays: [
@@ -37,6 +40,7 @@ describe('Days in month', () => {
         ]
       },
       {
+        monthInYear: 2,
         name: 'Test Month 2',
         daysInMonth: 11,
         extraDays: [
@@ -55,6 +59,7 @@ describe('Days in month', () => {
   test('Months with extra days and leap day', () => {
     const months: RPGCalendarMonth[] = [
       {
+        monthInYear: 1,
         name: 'Test Month 1',
         daysInMonth: 9,
         extraDays: [
@@ -68,6 +73,7 @@ describe('Days in month', () => {
         ]
       },
       {
+        monthInYear: 2,
         name: 'Test Month 2',
         daysInMonth: 11,
         extraDays: [

@@ -65,3 +65,27 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.month-input, .year-input {
+    border: none;
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    background: none;
+}
+
+.year-input {
+    width: 6ch;
+}
+
+.month-year-spacing {
+    margin: 0 1rem 0 1rem;
+    color: #959595;
+}
+
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 15%;
+}
