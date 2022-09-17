@@ -6,3 +6,5 @@ export * from './daysInWeek';
 export * from './prevMonth';
 export * from './nextMonth';
 export * from './extraDay';
+export * from './nextYear';
+export * from './prevYear';

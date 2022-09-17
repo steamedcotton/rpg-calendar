@@ -16,7 +16,9 @@ import {
   getYearNameBuilder,
   getPrevMonthYearBuilder,
   getNextMonthYearBuilder,
-  getExtraDayBuilder
+  getExtraDayBuilder,
+  getNextYearBuilder,
+  getPrevYearBuilder
 } from './lib';
 import { getTimeString } from './lib/time';
 
@@ -33,6 +35,8 @@ export class Calendar {
   private getWeekDays: () => RPGCalendarWeekday[];
   private getNextMonthYear: (monthQuery: RPGCalendarMonthQuery) => RPGCalendarMonthQuery;
   private getPrevMonthYear: (monthQuery: RPGCalendarMonthQuery) => RPGCalendarMonthQuery;
+  private getNextYear: (monthQuery: RPGCalendarMonthQuery) => RPGCalendarMonthQuery;
+  private getPrevYear: (monthQuery: RPGCalendarMonthQuery) => RPGCalendarMonthQuery;
   private getExtraDay: (year: number, month: number, day: number) => RPGCalendarExtraDay | undefined;
 
   constructor(private config: RPGCalendarConfig) {
@@ -49,6 +53,8 @@ export class Calendar {
     this.getConfigMonth = (month: number): RPGCalendarMonth => this.config.months[month - 1];
     this.getPrevMonthYear = getPrevMonthYearBuilder(config?.hasYear0, this.config.months);
     this.getNextMonthYear = getNextMonthYearBuilder(config?.hasYear0, this.config.months);
+    this.getPrevYear = getPrevYearBuilder(config?.hasYear0);
+    this.getNextYear = getNextYearBuilder(config?.hasYear0);
     this.getExtraDay = getExtraDayBuilder(this.config.months, this.isLeapYear);
   }
 
@@ -247,7 +253,14 @@ export class Calendar {
       monthOfYear: month,
       weekdays: this.getWeekDays(),
       nextMonthQuery: this.getNextMonthYear({ year, month }),
-      prevMonthQuery: this.getPrevMonthYear({ year, month })
+      prevMonthQuery: this.getPrevMonthYear({ year, month }),
+      nextYearQuery: this.getNextYear({ year, month }),
+      prevYearQuery: this.getPrevYear({ year, month })
     };
+  }
+
+  // getMonths returns all the months in a year.  Useful when displaying a dropdown.
+  getMonths(): RPGCalendarMonth[] {
+    return this.config.months;
   }
 }

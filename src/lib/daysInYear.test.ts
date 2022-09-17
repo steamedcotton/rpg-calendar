@@ -9,11 +9,13 @@ describe('Days in year', () => {
     const months: RPGCalendarMonth[] = [
       {
         name: 'Test Month 1',
-        daysInMonth: 9
+        daysInMonth: 9,
+        monthInYear: 1
       },
       {
         name: 'Test Month 2',
-        daysInMonth: 11
+        daysInMonth: 11,
+        monthInYear: 2
       }
     ];
     const getDaysInYear = getDaysInYearBuilder(months, isLeapYear4Years);
@@ -35,11 +37,13 @@ describe('Days in year', () => {
           {
             name: 'another extra day'
           }
-        ]
+        ],
+        monthInYear: 2
       },
       {
         name: 'Test Month 2',
-        daysInMonth: 11
+        daysInMonth: 11,
+        monthInYear: 2
       }
     ];
     const getDaysInYear = getDaysInYearBuilder(months, isLeapYear4Years);
@@ -59,11 +63,13 @@ describe('Days in year', () => {
             name: 'A leap day!',
             onlyInLeapYear: true
           }
-        ]
+        ],
+        monthInYear: 1
       },
       {
         name: 'Test Month 2',
-        daysInMonth: 11
+        daysInMonth: 11,
+        monthInYear: 2
       }
     ];
     const getDaysInYear = getDaysInYearBuilder(months, isLeapYear4Years);

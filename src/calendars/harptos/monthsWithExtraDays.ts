@@ -12,6 +12,7 @@ export const monthsWithExtraDays: RPGCalendarConfig = {
   monthStartOnWeekStart: true,
   months: [
     {
+      monthInYear: 1,
       name: 'Hammer',
       daysInMonth: 30,
       extraDays: [
@@ -21,14 +22,17 @@ export const monthsWithExtraDays: RPGCalendarConfig = {
       ]
     },
     {
+      monthInYear: 2,
       name: 'Alturiak',
       daysInMonth: 30
     },
     {
+      monthInYear: 3,
       name: 'Ches',
       daysInMonth: 30
     },
     {
+      monthInYear: 4,
       name: 'Tarsakh',
       daysInMonth: 30,
       extraDays: [
@@ -38,14 +42,17 @@ export const monthsWithExtraDays: RPGCalendarConfig = {
       ]
     },
     {
+      monthInYear: 5,
       name: 'Mirtul',
       daysInMonth: 30
     },
     {
+      monthInYear: 6,
       name: 'Kythorn',
       daysInMonth: 30
     },
     {
+      monthInYear: 7,
       name: 'Flamerule',
       daysInMonth: 30,
       extraDays: [
@@ -59,10 +66,12 @@ export const monthsWithExtraDays: RPGCalendarConfig = {
       ]
     },
     {
+      monthInYear: 8,
       name: 'Eleasis',
       daysInMonth: 30
     },
     {
+      monthInYear: 9,
       name: 'Eleint',
       daysInMonth: 30,
       extraDays: [
@@ -72,10 +81,12 @@ export const monthsWithExtraDays: RPGCalendarConfig = {
       ]
     },
     {
+      monthInYear: 10,
       name: 'Marpenoth',
       daysInMonth: 30
     },
     {
+      monthInYear: 11,
       name: 'Uktar',
       daysInMonth: 30,
       extraDays: [
@@ -85,6 +96,7 @@ export const monthsWithExtraDays: RPGCalendarConfig = {
       ]
     },
     {
+      monthInYear: 12,
       name: 'Nightal',
       daysInMonth: 30
     }
