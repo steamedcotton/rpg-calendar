@@ -10,6 +10,20 @@ export interface RPGCalendarConfig {
   yearNameMap?: Record<string, string>;
   hoursInDay?: number;
   monthStartOnWeekStart: boolean;
+  moons: RPGCalendarMoon[];
+}
+
+export interface RPGCalendarMoon {
+  name: string;
+
+  // cycle is the number of days that it takes the moon to go through all the phases
+  cycle: number;
+
+  // shift is the number of days that the start of the moon phase (new moon) is shifted from the start of the calendar
+  shift: number;
+
+  // color of the moon for display (web friendly value)
+  color: string;
 }
 
 export interface RPGCalendarExtraDay {
