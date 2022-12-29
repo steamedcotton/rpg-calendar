@@ -6,7 +6,8 @@ import {
   RPGCalendarMonth,
   RPGCalendarMonthQuery,
   RPGCalendarWeekday,
-  RPGCalendarExtraDay
+  RPGCalendarExtraDay,
+  RPGDateSpan
 } from './lib/types';
 import {
   isLeapYearBuilder,
@@ -262,5 +263,18 @@ export class Calendar {
   // getMonths returns all the months in a year.  Useful when displaying a dropdown.
   getMonths(): RPGCalendarMonth[] {
     return this.config.months;
+  }
+
+  // getDaySpanFromDate returns a RPGDateSpan with the min and max (start/end) times for the given day.  This is useful
+  // when creating queries or defining an event that lasted for an entire day.
+  getDaySpanFromDate(date: RPGCalendarDate): RPGDateSpan {
+    const eh = this.config.hoursInDay - 1;
+    const em = this.config.minutesInHour - 1;
+    const es = this.config.secondsInMinutes - 1;
+
+    return {
+      start: this.createDate(date.year, date.monthOfYear, date.dayOfMonth),
+      end: this.createDate(date.year, date.monthOfYear, date.dayOfMonth, eh, em, es)
+    };
   }
 }
