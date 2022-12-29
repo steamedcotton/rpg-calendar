@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { RPGCalendarMonthDisplay, RPGCalendarMonthQuery, RPGCalendarMonth } from '../../../src/lib/types';
-import { Calendar, calendars } from '../../../src';
+import { RPGCalendar, calendars } from '../../../src';
 
 const initialMonthQuery: RPGCalendarMonthQuery = {
   month: 1,
@@ -17,7 +17,7 @@ interface CalendarStore {
   prevYear: () => void;
 }
 
-const h = new Calendar(calendars.harptos.extraDays);
+const h = new RPGCalendar(calendars.harptos.extraDays);
 const months = h.getMonths();
 
 export const useStore = create<CalendarStore>((set) => ({

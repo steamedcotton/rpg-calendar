@@ -13,12 +13,12 @@ Example Calendar UI using this library: [steamedcotton.github.io/rpg-calendar](h
 ## Usage
 
 ```typescript
-import { Calendar, calendars } from 'rpg-calendar';
+import { RPGCalendar, calendars } from 'rpg-calendar';
 
 // Create a new Calendar using the Harptos Extra Days configuration.  This will add the "special" days as extra days
 // at the end of each month.  If you want the days to be separate months, then you can use
 // calendars.harptos.extraMonths.
-const cal = new Calendar(calendars.harptos.extraDays);
+const cal = new RPGCalendar(calendars.harptos.extraDays);
 
 // Use the calandar to parse an epoch
 console.log(cal.epochToDate('500-11:57:30'));
