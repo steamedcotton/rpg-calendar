@@ -1,10 +1,10 @@
 import { monthsWithExtraDays } from './monthsWithExtraDays';
 import { monthsWithExtraMonths } from './monthsWithExtraMonths';
-import { Calendar } from '../../Calendar';
+import { RPGCalendar } from '../../RPGCalendar';
 
 describe('Harptos calendar', () => {
   test('harptos epoch to date time - extra days', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
     const d = h.epochToDate(10);
     expect(d.year).toBe(0);
     expect(d.dayOfMonth).toBe(10);
@@ -15,7 +15,7 @@ describe('Harptos calendar', () => {
   });
 
   test('harptos epoch to date time - extra months', () => {
-    const h = new Calendar(monthsWithExtraMonths);
+    const h = new RPGCalendar(monthsWithExtraMonths);
     const d = h.epochToDate(10);
     expect(d.year).toBe(0);
     expect(d.dayOfMonth).toBe(10);
@@ -26,7 +26,7 @@ describe('Harptos calendar', () => {
   });
 
   test('get simple date from epoch', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
 
     // Fist day of Year 0
     const year0Date1 = h.epochToDate(1);
@@ -57,7 +57,7 @@ describe('Harptos calendar', () => {
   });
 
   test('with time', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
     const d = h.epochToDate('500-11:57:30');
     expect(d.year).toBe(1);
     expect(d?.time?.hour).toBe(11);
@@ -66,7 +66,7 @@ describe('Harptos calendar', () => {
   });
 
   test('year names', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
     // TODO: Enable test when negative years are supported/working
     // expect(h.epochToDate(-560).yearName).toBe('Year of Dreams Attained');
     expect(h.createDate(0).yearName).toBe('Year of the Rising Flame');
@@ -75,12 +75,12 @@ describe('Harptos calendar', () => {
   });
 
   test('year 0 should be a leap year', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
     expect(h.createDate(0).inLeapYear).toBe(true);
   });
 
   test('converting date time string to date object', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
     const d = h.dateStringToRPGDate('1345-02-05 11:37:09');
     expect(d.year).toBe(1345);
     expect(d.dayOfMonth).toBe(5);
@@ -93,7 +93,7 @@ describe('Harptos calendar', () => {
   // TODO: Add many more tests for edge cases (leap year, after first month, etc)
 
   test('getting a calendar month to display (Extra Days)', () => {
-    const h = new Calendar(monthsWithExtraDays);
+    const h = new RPGCalendar(monthsWithExtraDays);
     const md = h.getDisplayMonth({ year: 100, month: 1 });
 
     expect(md.weeks.length).toBe(4);
@@ -109,7 +109,7 @@ describe('Harptos calendar', () => {
   });
 
   test('getting a calendar month to display (Extra Months)', () => {
-    const h = new Calendar(monthsWithExtraMonths);
+    const h = new RPGCalendar(monthsWithExtraMonths);
     const md = h.getDisplayMonth({ year: 100, month: 1 });
 
     expect(md.weeks.length).toBe(3);
@@ -125,7 +125,7 @@ describe('Harptos calendar', () => {
   });
 
   test('creating various date spans', () => {
-    const h = new Calendar(monthsWithExtraMonths);
+    const h = new RPGCalendar(monthsWithExtraMonths);
 
     // Test 1
     const date1 = h.createDate(1215, 2, 3, 11, 45, 20);

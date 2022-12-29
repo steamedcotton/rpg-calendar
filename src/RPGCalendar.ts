@@ -23,7 +23,7 @@ import {
 } from './lib';
 import { getTimeString } from './lib/time';
 
-export class Calendar {
+export class RPGCalendar {
   // Utility functions
   private isLeapYear: (year: number) => boolean;
   private getDaysInYear: (year: number) => number;

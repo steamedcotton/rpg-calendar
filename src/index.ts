@@ -1,4 +1,4 @@
-import { Calendar } from './Calendar';
+import { RPGCalendar } from './RPGCalendar';
 import { calendars } from './calendars';
 
-export { Calendar, calendars };
+export { RPGCalendar, calendars };
