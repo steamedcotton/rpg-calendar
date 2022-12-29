@@ -123,4 +123,21 @@ describe('Harptos calendar', () => {
     expect(md.nextMonthQuery.month).toBe(2);
     expect(md.nextMonthQuery.year).toBe(100);
   });
+
+  test('creating various date spans', () => {
+    const h = new Calendar(monthsWithExtraMonths);
+
+    // Test 1
+    const date1 = h.createDate(1215, 2, 3, 11, 45, 20);
+    const span1 = h.getDaySpanFromDate(date1);
+    expect(span1.start.epochDayTime).toBe('444723-00:00:00')
+    expect(span1.end.epochDayTime).toBe('444723-23:59:59')
+
+    // Test 2
+    const date2 = h.createDate(0, 1, 1, 0, 0, 0);
+    const span2 = h.getDaySpanFromDate(date2);
+    expect(span2.start.epochDayTime).toBe('1-00:00:00')
+    expect(span2.end.epochDayTime).toBe('1-23:59:59')
+
+  });
 });

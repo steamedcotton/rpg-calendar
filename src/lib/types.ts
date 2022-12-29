@@ -9,6 +9,8 @@ export interface RPGCalendarConfig {
   seasons: RPGCalendarSeason[];
   yearNameMap?: Record<string, string>;
   hoursInDay?: number;
+  minutesInHour?: number;
+  secondsInMinutes?: number;
   monthStartOnWeekStart: boolean;
 }
 
@@ -80,4 +82,11 @@ export interface RPGCalendarMonthDisplay extends RPGCalendarMonth {
   prevMonthQuery: RPGCalendarMonthQuery;
   nextYearQuery: RPGCalendarMonthQuery;
   prevYearQuery: RPGCalendarMonthQuery;
+}
+
+// RPGDateSpan is a simple date container with a start and end RPGCalendarDate.  This can be used for representing spans
+// of time.
+export interface RPGDateSpan {
+  start: RPGCalendarDate;
+  end: RPGCalendarDate;
 }

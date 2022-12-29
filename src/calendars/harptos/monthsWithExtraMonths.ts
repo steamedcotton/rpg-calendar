@@ -2,6 +2,7 @@ import { RPGCalendarConfig } from '../../lib/types';
 import { MonthTypes } from '../../lib/monthTypes';
 import { weekdays } from './weekdays';
 import { yearNameMap } from './years';
+import {hoursInDay, minutesInHour, secondsInMinutes} from "./time";
 
 // This contains the months of the years with the extra days (like Midwinter) as separate months.
 export const monthsWithExtraMonths: RPGCalendarConfig = {
@@ -11,6 +12,9 @@ export const monthsWithExtraMonths: RPGCalendarConfig = {
   weekdays,
   yearNameMap,
   monthStartOnWeekStart: true,
+  hoursInDay: hoursInDay,
+  minutesInHour: minutesInHour,
+  secondsInMinutes: secondsInMinutes,
   months: [
     {
       monthInYear: 1,
