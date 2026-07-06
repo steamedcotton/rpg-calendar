@@ -295,13 +295,17 @@ export class RPGCalendar {
   // getDaySpanFromDate returns a RPGDateSpan with the min and max (start/end) times for the given day.  This is useful
   // when creating queries or defining an event that lasted for an entire day.
   getDaySpanFromDate(date: RPGCalendarDate): RPGDateSpan {
-    const eh = this.config.hoursInDay - 1;
-    const em = this.config.minutesInHour - 1;
-    const es = this.config.secondsInMinutes - 1;
+    const eh = (this.config.hoursInDay ?? 24) - 1;
+    const em = (this.config.minutesInHour ?? 60) - 1;
+    const es = (this.config.secondsInMinutes ?? 60) - 1;
+
+    const year = date.year ?? 0;
+    const month = date.monthOfYear ?? 1;
+    const day = date.dayOfMonth ?? 1;
 
     return {
-      start: this.createDate(date.year, date.monthOfYear, date.dayOfMonth),
-      end: this.createDate(date.year, date.monthOfYear, date.dayOfMonth, eh, em, es)
+      start: this.createDate(year, month, day),
+      end: this.createDate(year, month, day, eh, em, es)
     };
   }
 }
