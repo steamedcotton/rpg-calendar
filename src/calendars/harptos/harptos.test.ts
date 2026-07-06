@@ -96,11 +96,16 @@ describe('Harptos calendar', () => {
     const h = new RPGCalendar(monthsWithExtraDays);
     const md = h.getDisplayMonth({ year: 100, month: 1 });
 
-    expect(md.weeks.length).toBe(4);
+    // Regular days form a clean 3x10 grid; intercalary days live in a separate array.
+    expect(md.weeks.length).toBe(3);
     expect(md.weeks[0].length).toBe(10);
     expect(md.weeks[1].length).toBe(10);
     expect(md.weeks[2].length).toBe(10);
-    expect(md.weeks[3].length).toBe(1);
+
+    expect(md.extraDays.length).toBe(1);
+    expect(md.extraDays[0].extraDay?.name).toBe('Midwinter');
+    // Extra days carry a real epochDay so consumers can focus/select them.
+    expect(typeof md.extraDays[0].epochDay).toBe('number');
 
     expect(md.prevMonthQuery.month).toBe(12);
     expect(md.prevMonthQuery.year).toBe(99);
@@ -117,11 +122,36 @@ describe('Harptos calendar', () => {
     expect(md.weeks[1].length).toBe(10);
     expect(md.weeks[2].length).toBe(10);
     expect(md.weeks?.[3]).toBeUndefined(); // No third week, because extra days are put into extra months
+    expect(md.extraDays).toEqual([]); // Extras live in their own months, not on Hammer
 
     expect(md.prevMonthQuery.month).toBe(17);
     expect(md.prevMonthQuery.year).toBe(99);
     expect(md.nextMonthQuery.month).toBe(2);
     expect(md.nextMonthQuery.year).toBe(100);
+  });
+
+  test('Flamerule in a non-leap year has only Midsummer', () => {
+    const h = new RPGCalendar(monthsWithExtraDays);
+    // Year 101 is not a leap year (101 % 4 !== 0)
+    const md = h.getDisplayMonth({ year: 101, month: 7 });
+    expect(md.extraDays.length).toBe(1);
+    expect(md.extraDays[0].extraDay?.name).toBe('Midsummer');
+  });
+
+  test('Flamerule in a leap year has Midsummer and Shieldmeet', () => {
+    const h = new RPGCalendar(monthsWithExtraDays);
+    // Year 100 is a leap year (100 % 4 === 0, hasYear0: true)
+    const md = h.getDisplayMonth({ year: 100, month: 7 });
+    expect(md.extraDays.length).toBe(2);
+    expect(md.extraDays[0].extraDay?.name).toBe('Midsummer');
+    expect(md.extraDays[1].extraDay?.name).toBe('Shieldmeet');
+  });
+
+  test('Alturiak (no intercalary days) returns empty extraDays', () => {
+    const h = new RPGCalendar(monthsWithExtraDays);
+    const md = h.getDisplayMonth({ year: 100, month: 2 });
+    expect(md.extraDays).toEqual([]);
+    expect(md.weeks.length).toBe(3);
   });
 
   test('creating various date spans', () => {

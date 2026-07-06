@@ -43,7 +43,7 @@ export class RPGCalendar {
   constructor(private config: RPGCalendarConfig) {
     const { yearNameMap = {} } = config;
 
-    this.isLeapYear = isLeapYearBuilder(config?.leapYearInterval || 0, config?.hasYear0);
+    this.isLeapYear = isLeapYearBuilder(config?.leapYearInterval || 0, config?.hasYear0, config?.isLeapYear);
     this.getDaysInYear = getDaysInYearBuilder(config.months, this.isLeapYear);
     this.getDaysInMonth = getDaysInMonthBuilder(config.months, this.isLeapYear);
     this.getDaysInWeek = getDaysInWeekBuilder(config.weekdays);
@@ -233,22 +233,49 @@ export class RPGCalendar {
     // Get the first day of the month so that we can pull off all the information that pertains to the entire month.
     const firstDayOfMonth = this.createDate(year, month, 1);
     const { yearName } = firstDayOfMonth;
-    const daysInMonth = this.getDaysInMonth(month, year);
     const daysInWeek = this.getDaysInWeek();
+
+    // Only the regular days go in the week grid. Intercalary "extra" days are surfaced in a separate array
+    // so callers can render them distinctly (they aren't part of any weekday).
+    const regularDays = configMonth.daysInMonth;
+
+    // Leading padding: if the calendar doesn't align month starts to the first weekday, the first week
+    // gets empty cells so the first-of-month lands on its true dayOfWeek.
+    const firstDayOfWeek = firstDayOfMonth.dayOfWeek ?? 1;
+    const startOffset = this.config.monthStartOnWeekStart ? 0 : Math.max(0, firstDayOfWeek - 1);
+
     const weeks: RPGCalendarDate[][] = [];
-
-    for (let d = 1; d <= daysInMonth; d++) {
-      const w = Math.floor((d - 1) / daysInWeek);
-      if (!weeks?.[w]) {
-        weeks.push([]);
+    let currentWeek: RPGCalendarDate[] = [];
+    for (let i = 0; i < startOffset; i++) {
+      currentWeek.push({});
+    }
+    for (let d = 1; d <= regularDays; d++) {
+      currentWeek.push(this.createDate(year, month, d));
+      if (currentWeek.length === daysInWeek) {
+        weeks.push(currentWeek);
+        currentWeek = [];
       }
+    }
+    if (currentWeek.length > 0) {
+      weeks.push(currentWeek);
+    }
 
-      weeks[w].push(this.createDate(year, month, d));
+    // Extra days (Midwinter, Shieldmeet in leap years, 29 February in leap years, ...) get their own
+    // ordered array of full RPGCalendarDate objects with correct epochDay for selection.
+    const extraDays: RPGCalendarDate[] = [];
+    const configuredExtras = configMonth.extraDays ?? [];
+    const inLeap = this.isLeapYear(year);
+    let extraOffset = 1;
+    for (const ed of configuredExtras) {
+      if (ed.onlyInLeapYear && !inLeap) continue;
+      extraDays.push(this.createDate(year, month, regularDays + extraOffset));
+      extraOffset++;
     }
 
     return {
       ...configMonth,
       weeks,
+      extraDays,
       year,
       yearName,
       monthOfYear: month,

@@ -1,5 +1,6 @@
 import { monthsWithExtraDays } from './harptos/monthsWithExtraDays';
 import { monthsWithExtraMonths } from './harptos/monthsWithExtraMonths';
+import { gregorian } from './gregorian/gregorian';
 
 export const calendars = {
   harptos: {
@@ -11,5 +12,6 @@ export const calendars = {
 
     // This is the default calendar for harptos.
     standard: monthsWithExtraDays
-  }
+  },
+  gregorian
 };
