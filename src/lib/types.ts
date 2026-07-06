@@ -12,6 +12,9 @@ export interface RPGCalendarConfig {
   minutesInHour?: number;
   secondsInMinutes?: number;
   monthStartOnWeekStart: boolean;
+  // Optional override for leap-year detection. When provided it wins over leapYearInterval.
+  // Needed for calendars like Gregorian whose rule can't be expressed as a simple interval.
+  isLeapYear?: (year: number, hasYear0?: boolean) => boolean;
 }
 
 export interface RPGCalendarExtraDay {
@@ -72,11 +75,15 @@ export interface RPGCalendarMonthQuery {
   year: number;
 }
 
-export interface RPGCalendarMonthDisplay extends RPGCalendarMonth {
+// RPGCalendarMonthDisplay carries a resolved view of a month for rendering. The `extraDays` field
+// here is the list of intercalary days resolved to full RPGCalendarDate objects (with epochDay),
+// which differs from RPGCalendarMonth.extraDays (the config-level RPGCalendarExtraDay metadata).
+export interface RPGCalendarMonthDisplay extends Omit<RPGCalendarMonth, 'extraDays'> {
   year: number;
   monthOfYear: number;
   yearName?: string;
   weeks: RPGCalendarDate[][];
+  extraDays: RPGCalendarDate[];
   weekdays: RPGCalendarWeekday[];
   nextMonthQuery: RPGCalendarMonthQuery;
   prevMonthQuery: RPGCalendarMonthQuery;
